@@ -8,7 +8,9 @@ class ConstStrings:
     person_key = "person"
     username_key = "username"
     password_key = "password"
-
+    table_id_key = "table_id"
+    table_key = "table"
+    
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
     zmq_server_host_env_key = "ZMQ_SERVER_HOST"
