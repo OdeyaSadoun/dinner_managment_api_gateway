@@ -1,6 +1,5 @@
 class ConstStrings:
     # ? General
-    date_format = "%Y-%m-%d"
     base_tcp_connection_strings = "tcp://"
 
     # ? Keys
@@ -15,3 +14,5 @@ class ConstStrings:
     localhost_env_key = "LOCAL_HOST"
     zmq_server_host_env_key = "ZMQ_SERVER_HOST"
     business_logic_host_env_key = "BUSINESS_LOGIC_HOST"
+    http_port_evn_key = "HTTP_PORT"
+    business_logic_port_env_key = "BUSINESS_LOGIC_PORT"

@@ -5,7 +5,6 @@ from typing import Optional
 
 class Person(BaseModel):
     id: Optional[str]
-    personal_number: str
     name: str
     phone: str
     table_number: int
