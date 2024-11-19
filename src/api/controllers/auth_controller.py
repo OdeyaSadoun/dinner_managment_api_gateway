@@ -3,12 +3,13 @@ from fastapi import HTTPException
 from globals.consts.consts import Consts
 from globals.consts.const_strings import ConstStrings
 from globals.consts.zmq_const_strings import ZMQConstStrings
+from infrastructures.interfaces.icontroller_managment import IControllerManager
 from infrastructures.interfaces.izmq_client_manager import IZMQClientManager
 from models.data_classes.zmq_request import Request
 from models.data_classes.zmq_response import Response
 
 
-class AuthController:
+class AuthController(IControllerManager):
     def __init__(self, zmq_client: IZMQClientManager) -> None:
         self._zmq_client = zmq_client
 

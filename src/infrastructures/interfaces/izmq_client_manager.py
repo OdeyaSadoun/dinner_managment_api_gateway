@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 
-class IZMQClientManager:
+class IZMQClientManager(ABC):
     @abstractmethod
     def send_request(self, request):
         pass

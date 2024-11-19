@@ -1,5 +1,5 @@
-from abc import abstractmethod
+from abc import ABC
 
 
-class IHTTPServerManager:
+class IHTTPServerManager(ABC):
     pass

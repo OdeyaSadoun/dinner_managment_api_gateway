@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from globals.consts.consts import Consts
 from globals.consts.const_strings import ConstStrings
+from infrastructures.interfaces.icontroller_managment import IControllerManager
 from infrastructures.interfaces.izmq_client_manager import IZMQClientManager
 from models.data_classes.person import Person
 from models.data_classes.table import Table
@@ -10,7 +11,7 @@ from models.data_classes.zmq_response import Response
 from models.data_classes.zmq_request import Request
 
 
-class TableController:
+class TableController(IControllerManager):
     def __init__(self, zmq_client: IZMQClientManager) -> None:
         self._zmq_client = zmq_client
 
