@@ -4,7 +4,7 @@ from typing import Dict
 from api.routers.base_router import BaseRouter
 from models.data_classes.person import Person
 from models.data_classes.zmq_response import Response
-from infrastructures.interfaces.icontroller_managment import IControllerManager
+from dinner_managment_api_gateway.src.infrastructures.interfaces.icontroller_manager import IControllerManager
 from globals.consts.http_const_strings import HttpConstStrings
 
 

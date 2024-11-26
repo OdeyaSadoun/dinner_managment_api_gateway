@@ -1,7 +1,7 @@
 from typing import Any
 from fastapi import APIRouter
 
-from infrastructures.interfaces.icontroller_managment import IControllerManager
+from dinner_managment_api_gateway.src.infrastructures.interfaces.icontroller_manager import IControllerManager
 
 
 class BaseRouter:
