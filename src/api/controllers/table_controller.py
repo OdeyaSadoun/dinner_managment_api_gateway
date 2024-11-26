@@ -83,17 +83,17 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def add_person_to_table(self, table_id: str, person: Person) -> Response:
-        try:
-            request = Request(
-                resource=ZMQConstStrings.table_resource,
-                operation=ZMQConstStrings.add_person_to_table_operation,
-                data={
-                    ConstStrings.table_id_key: table_id,
-                    ConstStrings.person_key: person
-                }
-            )
-            return self._zmq_client.send_request(request)
-        except Exception as e:
-            raise HTTPException(
-                status_code=Consts.error_status_code, detail=str(e))
+    # def add_person_to_table(self, table_id: str, person: Person) -> Response:
+    #     try:
+    #         request = Request(
+    #             resource=ZMQConstStrings.table_resource,
+    #             operation=ZMQConstStrings.add_person_to_table_operation,
+    #             data={
+    #                 ConstStrings.table_id_key: table_id,
+    #                 ConstStrings.person_key: person
+    #             }
+    #         )
+    #         return self._zmq_client.send_request(request)
+    #     except Exception as e:
+    #         raise HTTPException(
+    #             status_code=Consts.error_status_code, detail=str(e))

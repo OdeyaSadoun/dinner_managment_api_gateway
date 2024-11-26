@@ -48,9 +48,9 @@ class TableRouter(BaseRouter):
             except HTTPException as e:
                 raise e
 
-        @self._router.patch(HttpConstStrings.add_person_to_table_route)
-        async def add_person_to_table(table_id: str,  person: Person) -> Response:
-            try:
-                return self._ctrl.add_person_to_table(table_id, person)
-            except HTTPException as e:
-                raise e
+        # @self._router.patch(HttpConstStrings.add_person_to_table_route)
+        # async def add_person_to_table(table_id: str,  person: Person) -> Response:
+        #     try:
+        #         return self._ctrl.add_person_to_table(table_id, person)
+        #     except HTTPException as e:
+        #         raise e

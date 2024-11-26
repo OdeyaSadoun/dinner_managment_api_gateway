@@ -67,12 +67,13 @@ class PersonController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def seat_person(self, person_id: str) -> Response:
+    def seat_person(self, person_id: str, table_id: str) -> Response:
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,
-                operation=ZMQConstStrings.seat_person_operation,
-                data={ConstStrings.person_id_key: person_id}
+                operation=ZMQConstStrings.seat_and_add_person_to_table_operation,
+                data={ConstStrings.person_id_key: person_id,
+                      ConstStrings.table_id_key: table_id}
             )
             return self._zmq_client.send_request(request)
         except Exception as e:
