@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from globals.consts.consts import Consts
 from globals.consts.const_strings import ConstStrings
-from dinner_managment_api_gateway.src.infrastructures.interfaces.icontroller_manager import IControllerManager
+from infrastructures.interfaces.icontroller_manager import IControllerManager
 from infrastructures.interfaces.izmq_client_manager import IZMQClientManager
 from models.data_classes.person import Person
 from models.data_classes.table import Table

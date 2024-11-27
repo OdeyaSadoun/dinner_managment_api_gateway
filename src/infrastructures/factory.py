@@ -19,7 +19,7 @@ from models.managers.zmq_client_manager import ZMQClientManager
 class Factory:
     def create_zmq_client() -> IZMQClientManager:
         host = os.getenv(ConstStrings.business_logic_host_env_key)
-        port = os.getenv(ConstStrings.business_logic_port_env_key)
+        port = int(os.getenv(ConstStrings.business_logic_port_env_key))
         return ZMQClientManager(host, port)
 
     def create_auth_router(zmq_client: IZMQClientManager) -> BaseRouter:

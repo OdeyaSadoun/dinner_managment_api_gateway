@@ -1,10 +1,12 @@
 import json
 from typing import Any, Dict
 
+from pydantic import BaseModel
+
 from globals.consts.zmq_const_strings import ZMQConstStrings
 
 
-class Request:
+class Request(BaseModel):
     def __init__(self, resource: str, operation: str, data: Dict = {}) -> None:
         self.resource = resource
         self.operation = operation

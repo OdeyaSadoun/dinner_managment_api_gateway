@@ -1,7 +1,7 @@
 class ConstStrings:
     # ? General
     base_tcp_connection_strings = "tcp://"
-
+    
     # ? Keys
     person_id_key = "person_id"
     person_key = "person"

@@ -1,11 +1,13 @@
+import os
 from typing import List
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from api.routers.base_router import BaseRouter
-from globals.consts.consts import Consts
 from globals.consts.const_strings import ConstStrings
+from globals.consts.http_const_strings import HttpConstStrings
+from globals.consts.consts import Consts
 from infrastructures.interfaces.ihttp_server_manager import IHTTPServerManager
 
 
@@ -25,11 +27,11 @@ class HTTPServerManager(IHTTPServerManager):
     def _add_cors_middleware(self) -> None:
         self._app.add_middleware(
             CORSMiddleware,
-            allow_origins=[ConstStrings.all_sources], 
+            allow_origins=[HttpConstStrings.all_sources], 
             allow_credentials=True,
-            allow_methods=[ConstStrings.get_method, ConstStrings.post_method, ConstStrings.put_method, ConstStrings.delete_method, ConstStrings.patch_method], 
-            allow_headers=[ConstStrings.all_sources],
+            allow_methods=[HttpConstStrings.get_method, HttpConstStrings.post_method, HttpConstStrings.put_method, HttpConstStrings.delete_method, HttpConstStrings.patch_method], 
+            allow_headers=[HttpConstStrings.all_sources],
         )
 
     def _run_server(self) -> None:
-        uvicorn.run(self._app, host=ConstStrings.localhost, port=Consts.port)
+        uvicorn.run(self._app, host=os.getenv(ConstStrings.localhost_env_key), port=int(os.getenv(ConstStrings.http_port_evn_key)))
