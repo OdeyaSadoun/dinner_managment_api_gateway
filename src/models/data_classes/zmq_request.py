@@ -16,14 +16,11 @@ class Request():
     data: Optional[Dict] = None
 
     def to_json(self) -> Any:
-        print("data", self.data)
-        obj = json.dumps(Serializer.serialize_data({
+        return json.dumps(Serializer.serialize_data({
             ZMQConstStrings.resource_identifier: self.resource,
             ZMQConstStrings.operation_identifier: self.operation,
             ZMQConstStrings.data_identifier: self.data
         }))
-        print("obj", obj)
-        return obj
     
     @classmethod
     def from_json(self, json_str: str) -> Any:

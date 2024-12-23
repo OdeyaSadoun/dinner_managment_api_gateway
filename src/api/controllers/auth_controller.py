@@ -14,14 +14,13 @@ class AuthController(IControllerManager):
     def __init__(self, zmq_client: IZMQClientManager) -> None:
         self._zmq_client = zmq_client
 
-    def login(self, username: str, password: str):
+    def login(self, user: Auth):
         try:
             request = Request(
                 resource=ZMQConstStrings.auth_resource,
                 operation=ZMQConstStrings.login_operation,
                 data={
-                    ConstStrings.username_key: username,
-                    ConstStrings.password_key: password
+                    ConstStrings.auth_key: user
                 }
             )
             return self._zmq_client.send_request(request)
@@ -37,7 +36,6 @@ class AuthController(IControllerManager):
                     ConstStrings.auth_key: user
                 }
             )
-            print("api ctrl", request.data)
             return self._zmq_client.send_request(request)
         except Exception as e:
             raise HTTPException(status_code=Consts.error_status_code, detail=str(e))

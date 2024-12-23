@@ -13,9 +13,9 @@ class AuthRouter(BaseRouter):
         
     def setup_routes(self) -> None:
         @self._router.post(HttpConstStrings.login_route)
-        async def login(username: str, password: str):
+        async def login(user: Auth):
             try:
-                return self._ctrl.login(username, password)
+                return self._ctrl.login(user)
             except HTTPException as e:
                 raise e
         
