@@ -15,7 +15,7 @@ class TableController(IControllerManager):
     def __init__(self, zmq_client: IZMQClientManager) -> None:
         self._zmq_client = zmq_client
 
-    def get_all_tables(self) -> Response:
+    def get_all_tables(self):
         try:
             request = Request(
                 resource=ZMQConstStrings.table_resource,
@@ -26,7 +26,7 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def get_table_by_id(self, table_id: str) -> Response:
+    def get_table_by_id(self, table_id: str):
         try:
             request = Request(
                 resource=ZMQConstStrings.table_resource,
@@ -40,7 +40,7 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def create_table(self, table: Table) -> Response:
+    def create_table(self, table: Table):
         try:
             request = Request(
                 resource=ZMQConstStrings.table_resource,
@@ -54,7 +54,7 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def update_table(self, table_id: str, table: Table) -> Response:
+    def update_table(self, table_id: str, table: Table):
         try:
             request = Request(
                 resource=ZMQConstStrings.table_resource,
@@ -69,7 +69,7 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def delete_table(self, table_id: str) -> Response:
+    def delete_table(self, table_id: str):
         try:
             request = Request(
                 resource=ZMQConstStrings.table_resource,
@@ -83,7 +83,7 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    # def add_person_to_table(self, table_id: str, person: Person) -> Response:
+    # def add_person_to_table(self, table_id: str, person: Person):
     #     try:
     #         request = Request(
     #             resource=ZMQConstStrings.table_resource,

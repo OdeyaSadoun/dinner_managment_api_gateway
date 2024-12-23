@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 
+from models.data_classes.auth import Auth
 from globals.consts.consts import Consts
 from globals.consts.const_strings import ConstStrings
 from globals.consts.zmq_const_strings import ZMQConstStrings
@@ -13,7 +14,7 @@ class AuthController(IControllerManager):
     def __init__(self, zmq_client: IZMQClientManager) -> None:
         self._zmq_client = zmq_client
 
-    def login(self, username: str, password: str) -> Response:
+    def login(self, username: str, password: str):
         try:
             request = Request(
                 resource=ZMQConstStrings.auth_resource,
@@ -27,16 +28,16 @@ class AuthController(IControllerManager):
         except Exception as e:
             raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
 
-    def register(self, username: str, password: str) -> Response:
+    def register(self, user: Auth):
         try:
             request = Request(
                 resource=ZMQConstStrings.auth_resource,
                 operation=ZMQConstStrings.register_operation,
                 data={
-                    ConstStrings.username_key: username,
-                    ConstStrings.password_key: password
+                    ConstStrings.auth_key: user
                 }
             )
+            print("api ctrl", request.data)
             return self._zmq_client.send_request(request)
         except Exception as e:
             raise HTTPException(status_code=Consts.error_status_code, detail=str(e))

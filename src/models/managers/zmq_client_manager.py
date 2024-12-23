@@ -11,8 +11,13 @@ class ZMQClientManager(IZMQClientManager):
         self._connect(host, port)
 
     def send_request(self, request: Request) -> Response:
+        print("send request", request)
+        to_json = request.to_json()
+        print("send request to json", to_json)
         self._socket.send_json(request.to_json())
+        print("befor recv json")
         response = self._socket.recv_json()
+        print("after response")
         return Response.from_json(response)
 
     def _connect(self, host: str, port: str) -> None:

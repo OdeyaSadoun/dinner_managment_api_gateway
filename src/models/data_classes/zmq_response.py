@@ -6,11 +6,14 @@ from globals.enums.response_status import ResponseStatus
 from globals.consts.zmq_const_strings import ZMQConstStrings
 
 
-class Response(BaseModel):
-    # def __init__(self, status: ResponseStatus, data: Dict = {}) -> None:
-    #     self.status = status
-    #     self.data = data
-
+class Response():
+    def __init__(self, status: ResponseStatus, data: Dict = {}) -> None:
+        self.status = status
+        self.data = data
+        
+    status: ResponseStatus
+    data: Optional[Dict] = None
+    
     def to_json(self) -> Any:
         return json.dumps({
             ZMQConstStrings.status_identifier: self.status.name,
@@ -24,5 +27,3 @@ class Response(BaseModel):
         data = json_dict.get(ZMQConstStrings.data_identifier, {})
         return self(status=status, data=data)
 
-    status: ResponseStatus
-    data: Optional[Dict] = None

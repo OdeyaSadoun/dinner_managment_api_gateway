@@ -15,42 +15,42 @@ class PersonRouter(BaseRouter):
 
     def setup_routes(self) -> None:
         @self._router.get(HttpConstStrings.get_all_people_route)
-        async def get_all_people() -> Response:
+        async def get_all_people():
             try:
                 return self._ctrl.get_all_people()
             except HTTPException as e:
                 raise e
 
         @self._router.get(HttpConstStrings.get_person_by_id_route)
-        async def get_person_by_id(person_id: str) -> Response:
+        async def get_person_by_id(person_id: str):
             try:
                 return self._ctrl.get_person_by_id(person_id)
             except HTTPException as e:
                 raise e
 
         @self._router.post(HttpConstStrings.create_person_route)
-        async def create_person(person: Person) -> Response:
+        async def create_person(person: Person):
             try:
                 return self._ctrl.create_person(person)
             except HTTPException as e:
                 raise e
 
         @self._router.put(HttpConstStrings.update_person_route)
-        async def update_person(person_id: str, person: Person) -> Response:
+        async def update_person(person_id: str, person: Person):
             try:
                 return self._ctrl.update_person(person_id, person)
             except HTTPException as e:
                 raise e
 
         @self._router.patch(HttpConstStrings.seat_person_route)
-        async def seat_person(person_id: str) -> Response:
+        async def seat_person(person_id: str):
             try:
                 return self._ctrl.seat_person(person_id)
             except HTTPException as e:
                 raise e
 
         @self._router.patch(HttpConstStrings.delete_person_route)
-        async def delete_person(person_id: str) -> Response:
+        async def delete_person(person_id: str):
             try:
                 return self._ctrl.delete_person(person_id)
             except HTTPException as e:

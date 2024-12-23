@@ -15,7 +15,7 @@ class PersonController(IControllerManager):
         super().__init__()
         self._zmq_client = zmq_client
 
-    def get_all_people(self) -> Response:
+    def get_all_people(self):
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,
@@ -26,7 +26,7 @@ class PersonController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def get_person_by_id(self, person_id: str) -> Response:
+    def get_person_by_id(self, person_id: str):
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,
@@ -38,7 +38,7 @@ class PersonController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def create_person(self, person: Person) -> Response:
+    def create_person(self, person: Person):
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,
@@ -52,7 +52,7 @@ class PersonController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def update_person(self, person_id: str, person: Person) -> Response:
+    def update_person(self, person_id: str, person: Person):
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,
@@ -67,7 +67,7 @@ class PersonController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def seat_person(self, person_id: str, table_id: str) -> Response:
+    def seat_person(self, person_id: str, table_id: str):
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,
@@ -80,7 +80,7 @@ class PersonController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def delete_person(self, person_id: str) -> Response:
+    def delete_person(self, person_id: str):
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,

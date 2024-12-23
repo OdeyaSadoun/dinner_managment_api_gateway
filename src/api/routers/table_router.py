@@ -14,42 +14,42 @@ class TableRouter(BaseRouter):
         
     def setup_routes(self) -> None:
         @self._router.get(HttpConstStrings.get_all_tables_route)
-        async def get_all_tables() -> Response:
+        async def get_all_tables():
             try:
                 return self._ctrl.get_all_tables()
             except HTTPException as e:
                 raise e
 
         @self._router.get(HttpConstStrings.get_table_by_id_route)
-        async def get_table_by_id(table_id: str) -> Response:
+        async def get_table_by_id(table_id: str):
             try:
                 return self._ctrl.get_table_by_id(table_id)
             except HTTPException as e:
                 raise e
 
         @self._router.post(HttpConstStrings.create_table_route)
-        async def create_table(table: Table) -> Response:
+        async def create_table(table: Table):
             try:
                 return self._ctrl.create_table(table)
             except HTTPException as e:
                 raise e
 
         @self._router.put(HttpConstStrings.update_table_route)
-        async def update_table(table_id: str, table: Table) -> Response:
+        async def update_table(table_id: str, table: Table):
             try:
                 return self._ctrl.update_table(table_id, table)
             except HTTPException as e:
                 raise e
 
         @self._router.patch(HttpConstStrings.delete_table_route)
-        async def delete_table(table_id: str) -> Response:
+        async def delete_table(table_id: str):
             try:
                 return self._ctrl.delete_table(table_id)
             except HTTPException as e:
                 raise e
 
         # @self._router.patch(HttpConstStrings.add_person_to_table_route)
-        # async def add_person_to_table(table_id: str,  person: Person) -> Response:
+        # async def add_person_to_table(table_id: str,  person: Person):
         #     try:
         #         return self._ctrl.add_person_to_table(table_id, person)
         #     except HTTPException as e:
