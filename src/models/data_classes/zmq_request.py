@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 from pydantic import BaseModel
 
@@ -7,10 +7,10 @@ from globals.consts.zmq_const_strings import ZMQConstStrings
 
 
 class Request(BaseModel):
-    def __init__(self, resource: str, operation: str, data: Dict = {}) -> None:
-        self.resource = resource
-        self.operation = operation
-        self.data = data
+    # def __init__(self, resource: str, operation: str, data: Dict = {}) -> None:
+    #     self.resource = resource
+    #     self.operation = operation
+    #     self.data = data
 
     def to_json(self) -> Any:
         return json.dumps({
@@ -28,4 +28,4 @@ class Request(BaseModel):
     
     resource: str
     operation: str
-    data: Dict
+    data: Optional[Dict] = None

@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from pydantic import BaseModel
 
 from globals.enums.response_status import ResponseStatus
@@ -7,9 +7,9 @@ from globals.consts.zmq_const_strings import ZMQConstStrings
 
 
 class Response(BaseModel):
-    def __init__(self, status: ResponseStatus, data: Dict = {}) -> None:
-        self.status = status
-        self.data = data
+    # def __init__(self, status: ResponseStatus, data: Dict = {}) -> None:
+    #     self.status = status
+    #     self.data = data
 
     def to_json(self) -> Any:
         return json.dumps({
@@ -25,4 +25,4 @@ class Response(BaseModel):
         return self(status=status, data=data)
 
     status: ResponseStatus
-    data: Dict
+    data: Optional[Dict] = None
