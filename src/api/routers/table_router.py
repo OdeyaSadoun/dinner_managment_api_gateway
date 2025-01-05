@@ -33,13 +33,36 @@ class TableRouter(BaseRouter):
                 return self._ctrl.create_table(table)
             except HTTPException as e:
                 raise e
-
-        @self._router.put(HttpConstStrings.update_table_route)
-        async def update_table(table_id: str, table: Table):
+        
+        @self._router.patch(HttpConstStrings.update_table_position_route)
+        async def update_table_position(table_id: str, position: dict):
             try:
-                return self._ctrl.update_table(table_id, table)
+                print(position)
+                print(position["position"])
+                return self._ctrl.update_table_position(table_id, position["position"])
             except HTTPException as e:
                 raise e
+
+        @self._router.patch(HttpConstStrings.remove_person_from_table_route)
+        async def remove_person_from_table(table_id: str, person_id: str):
+            try:
+                return self._ctrl.remove_person_from_table(table_id, person_id)
+            except HTTPException as e:
+                raise e
+
+        @self._router.patch(HttpConstStrings.add_person_to_table_route)
+        async def add_person_to_table(table_id: str, person_id: str):
+            try:
+                return self._ctrl.add_person_to_table(table_id, person_id)
+            except HTTPException as e:
+                raise e
+
+        # @self._router.put(HttpConstStrings.update_table_route)
+        # async def update_table(table_id: str, table: Table):
+        #     try:
+        #         return self._ctrl.update_table(table_id, table)
+        #     except HTTPException as e:
+        #         raise e
 
         @self._router.patch(HttpConstStrings.delete_table_route)
         async def delete_table(table_id: str):

@@ -10,6 +10,7 @@ class ConstStrings:
     password_key = "password"
     table_id_key = "table_id"
     table_key = "table"
+    position_key = "position"
     
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"

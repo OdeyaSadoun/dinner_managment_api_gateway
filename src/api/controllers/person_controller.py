@@ -7,7 +7,6 @@ from infrastructures.interfaces.icontroller_manager import IControllerManager
 from infrastructures.interfaces.izmq_client_manager import IZMQClientManager
 from models.data_classes.person import Person
 from models.data_classes.zmq_request import Request
-from models.data_classes.zmq_response import Response
 
 
 class PersonController(IControllerManager):

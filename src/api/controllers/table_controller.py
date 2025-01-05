@@ -7,7 +7,6 @@ from infrastructures.interfaces.icontroller_manager import IControllerManager
 from infrastructures.interfaces.izmq_client_manager import IZMQClientManager
 from models.data_classes.person import Person
 from models.data_classes.table import Table
-from models.data_classes.zmq_response import Response
 from models.data_classes.zmq_request import Request
 
 
@@ -54,6 +53,22 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
+    def update_table_position(self, table_id: str, position: dict):
+        try:
+            print("position, ctrl, api", position)
+            request = Request(
+                resource=ZMQConstStrings.table_resource,
+                operation=ZMQConstStrings.update_table_position_operation,
+                data={
+                    ConstStrings.table_id_key: table_id,
+                    ConstStrings.position_key: position
+                }
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(
+                status_code=Consts.error_status_code, detail=str(e))
+            
     def update_table(self, table_id: str, table: Table):
         try:
             request = Request(
@@ -83,17 +98,32 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    # def add_person_to_table(self, table_id: str, person: Person):
-    #     try:
-    #         request = Request(
-    #             resource=ZMQConstStrings.table_resource,
-    #             operation=ZMQConstStrings.add_person_to_table_operation,
-    #             data={
-    #                 ConstStrings.table_id_key: table_id,
-    #                 ConstStrings.person_key: person
-    #             }
-    #         )
-    #         return self._zmq_client.send_request(request)
-    #     except Exception as e:
-    #         raise HTTPException(
-    #             status_code=Consts.error_status_code, detail=str(e))
+    def add_person_to_table(self, table_id: str, person_id: str):
+        try:
+            request = Request(
+                resource=ZMQConstStrings.table_resource,
+                operation=ZMQConstStrings.add_person_to_table_operation,
+                data={
+                    ConstStrings.table_id_key: table_id,
+                    ConstStrings.person_id_key: person_id
+                }
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(
+                status_code=Consts.error_status_code, detail=str(e))    
+            
+    def remove_person_from_table(self, table_id: str, person_id: str):
+        try:
+            request = Request(
+                resource=ZMQConstStrings.table_resource,
+                operation=ZMQConstStrings.remove_person_from_table_operation,
+                data={
+                    ConstStrings.table_id_key: table_id,
+                    ConstStrings.person_id_key: person_id
+                }
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(
+                status_code=Consts.error_status_code, detail=str(e))

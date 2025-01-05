@@ -33,4 +33,6 @@ class ZMQConstStrings:
     update_table_operation = "update_table"
     delete_table_operation = "delete_table"
     add_person_to_table_operation = "add_person_to_table"
+    remove_person_from_table_operation = "remove_person_from_table"
+    update_table_position_operation = "update_table_position"
     
