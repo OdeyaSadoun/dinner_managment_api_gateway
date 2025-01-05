@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 
 from api.routers.base_router import BaseRouter
+from models.data_classes.add_and_remove_person_request import AddAndRemovePersonRequest
 from models.data_classes.person import Person
 from models.data_classes.table import Table
 from models.data_classes.zmq_response import Response
@@ -44,16 +45,16 @@ class TableRouter(BaseRouter):
                 raise e
 
         @self._router.patch(HttpConstStrings.remove_person_from_table_route)
-        async def remove_person_from_table(table_id: str, person_id: str):
+        async def remove_person_from_table(table_id: str, request: AddAndRemovePersonRequest):
             try:
-                return self._ctrl.remove_person_from_table(table_id, person_id)
+                return self._ctrl.remove_person_from_table(table_id, request.person_id)
             except HTTPException as e:
                 raise e
-
+            
         @self._router.patch(HttpConstStrings.add_person_to_table_route)
-        async def add_person_to_table(table_id: str, person_id: str):
+        async def add_person_to_table(table_id: str, request: AddAndRemovePersonRequest):
             try:
-                return self._ctrl.add_person_to_table(table_id, person_id)
+                return self._ctrl.add_person_to_table(table_id, request.person_id)
             except HTTPException as e:
                 raise e
 
