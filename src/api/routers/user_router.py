@@ -1,6 +1,7 @@
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException
 from api.routers.base_router import BaseRouter
 
+from api.middlewares.jwt_middlware import JWTMiddleware
 from models.data_classes.login_user import LoginUser
 from models.data_classes.user import User
 from globals.consts.http_const_strings import HttpConstStrings
@@ -19,7 +20,7 @@ class UserRouter(BaseRouter):
             except HTTPException as e:
                 raise e
         
-        @self._router.post(HttpConstStrings.register_route)
+        @self._router.post(HttpConstStrings.register_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def register(user : User):
             try:
                 return self._ctrl.register(user)

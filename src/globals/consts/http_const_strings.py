@@ -22,6 +22,7 @@ class HttpConstStrings:
     create_person_route = ""
     update_person_route = "/{person_id}"
     seat_person_route = "/seat/{person_id}"
+    unseat_person_route = "/unseat/{person_id}"
     delete_person_route = "/delete/{person_id}"
 
     get_all_tables_route = ""
