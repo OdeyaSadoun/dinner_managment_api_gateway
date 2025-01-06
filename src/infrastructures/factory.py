@@ -3,8 +3,8 @@ from typing import List
 
 from api.controllers.person_controller import PersonController
 from api.routers.person_router import PersonRouter
-from api.controllers.auth_controller import AuthController
-from api.routers.auth_router import AuthRouter
+from api.controllers.user_controller import UserController
+from api.routers.user_router import UserRouter
 from api.controllers.table_controller import TableController
 from api.routers.table_router import TableRouter
 from api.routers.base_router import BaseRouter
@@ -22,9 +22,9 @@ class Factory:
         port = int(os.getenv(ConstStrings.business_logic_port_env_key))
         return ZMQClientManager(host, port)
 
-    def create_auth_router(zmq_client: IZMQClientManager) -> BaseRouter:
-        auth_controller = AuthController(zmq_client)
-        return AuthRouter(HttpConstStrings.auth_prefix, auth_controller)
+    def create_user_router(zmq_client: IZMQClientManager) -> BaseRouter:
+        user_controller = UserController(zmq_client)
+        return UserRouter(HttpConstStrings.auth_prefix, user_controller)
 
     def create_person_router(zmq_client: IZMQClientManager) -> BaseRouter:
         person_controller = PersonController(zmq_client)
@@ -38,7 +38,7 @@ class Factory:
         return [
             Factory.create_person_router(zmq_client),
             Factory.create_table_router(zmq_client),
-            Factory.create_auth_router(zmq_client)
+            Factory.create_user_router(zmq_client)
         ]
 
     def create_http_server(routes: List[BaseRouter]) -> IHTTPServerManager:

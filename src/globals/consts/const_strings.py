@@ -6,6 +6,7 @@ class ConstStrings:
     person_id_key = "person_id"
     person_key = "person"
     auth_key = "auth"
+    user_key = "user"
     username_key = "username"
     password_key = "password"
     table_id_key = "table_id"
