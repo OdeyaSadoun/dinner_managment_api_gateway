@@ -1,5 +1,10 @@
+from datetime import datetime
+import os
 from fastapi import HTTPException
+from jwt import encode
 
+from globals.enums.response_status import ResponseStatus
+from models.data_classes.zmq_response import Response
 from models.data_classes.login_user import LoginUser
 from models.data_classes.user import User
 from globals.consts.consts import Consts
@@ -16,6 +21,7 @@ class UserController(IControllerManager):
 
     def login(self, user: LoginUser):
         try:
+            print("login")
             request = Request(
                 resource=ZMQConstStrings.auth_resource,
                 operation=ZMQConstStrings.login_operation,
@@ -23,9 +29,39 @@ class UserController(IControllerManager):
                     ConstStrings.user_key: user
                 }
             )
-            return self._zmq_client.send_request(request)
+            response =  self._zmq_client.send_request(request)
+            
+            print("response", response.data)
+            print("check")
+            print(response.status.value)
+             # בדיקת סטטוס התגובה
+            if response.status.value != "success":
+                return response
+
+            # יצירת טוקן JWT אם התגובה הצליחה
+            # user_data = response.data.get(ConstStrings.user_key)
+            print("user_data", response.data, response.data["username"], response.data.get("role"))
+            token = encode(
+                {
+                    "username": response.data.get("username"),
+                    "role": response.data.get("role"),  
+                    "exp": os.getenv("JWT_EXP_DELTA_SECONDS"), 
+                },
+                os.getenv("JWT_SECRET"),
+                algorithm=os.getenv("JWT_ALGORITHM")
+            )
+            print("token", token)
+            # החזרת התגובה עם הטוקן
+            return Response(
+                status=ResponseStatus.SUCCESS,
+                data={
+                    ConstStrings.username_key: response.data.get("username"),
+                    ConstStrings.token_key: token
+                }
+            )
+
         except Exception as e:
-            raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
+            raise HTTPException(status_code=500, detail=str(e))
 
     def register(self, user: User):
         try:

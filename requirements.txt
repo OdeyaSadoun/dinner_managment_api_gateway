@@ -1,4 +1,4 @@
 fastapi 
 pyzmq
 uvicorn
-jwt
+PyJWT

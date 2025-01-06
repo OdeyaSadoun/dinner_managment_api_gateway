@@ -12,6 +12,7 @@ class ConstStrings:
     table_id_key = "table_id"
     table_key = "table"
     position_key = "position"
+    token_key = "token"
     
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
