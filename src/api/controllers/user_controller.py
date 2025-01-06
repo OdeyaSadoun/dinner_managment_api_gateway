@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 from fastapi import HTTPException
 from jwt import encode
@@ -41,11 +41,12 @@ class UserController(IControllerManager):
             # יצירת טוקן JWT אם התגובה הצליחה
             # user_data = response.data.get(ConstStrings.user_key)
             print("user_data", response.data, response.data["username"], response.data.get("role"))
+            exp = datetime.utcnow() + timedelta(hours=1)  # תוקף לשעה
             token = encode(
                 {
                     "username": response.data.get("username"),
                     "role": response.data.get("role"),  
-                    "exp": os.getenv("JWT_EXP_DELTA_SECONDS"), 
+                    "exp": int(exp.timestamp()), 
                 },
                 os.getenv("JWT_SECRET"),
                 algorithm=os.getenv("JWT_ALGORITHM")
