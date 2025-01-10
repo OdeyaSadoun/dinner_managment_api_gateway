@@ -59,6 +59,7 @@ class PersonRouter(BaseRouter):
         @self._router.patch(HttpConstStrings.delete_person_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def delete_person(person_id: str):
             try:
+                print("delete api")
                 return self._ctrl.delete_person(person_id)
             except HTTPException as e:
                 raise e
