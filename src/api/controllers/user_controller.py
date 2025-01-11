@@ -21,7 +21,6 @@ class UserController(IControllerManager):
 
     def login(self, user: LoginUser):
         try:
-            print("login")
             request = Request(
                 resource=ZMQConstStrings.auth_resource,
                 operation=ZMQConstStrings.login_operation,
@@ -29,18 +28,10 @@ class UserController(IControllerManager):
                     ConstStrings.user_key: user
                 }
             )
-            response =  self._zmq_client.send_request(request)
-            
-            print("response", response.data)
-            print("check")
-            print(response.status.value)
-             # בדיקת סטטוס התגובה
+            response = self._zmq_client.send_request(request)
             if response.status.value != "success":
                 return response
 
-            # יצירת טוקן JWT אם התגובה הצליחה
-            # user_data = response.data.get(ConstStrings.user_key)
-            print("user_data", response.data, response.data["username"], response.data.get("role"))
             exp = datetime.utcnow() + timedelta(hours=1)  # תוקף לשעה
             token = encode(
                 {
@@ -51,8 +42,6 @@ class UserController(IControllerManager):
                 os.getenv("JWT_SECRET"),
                 algorithm=os.getenv("JWT_ALGORITHM")
             )
-            print("token", token)
-            # החזרת התגובה עם הטוקן
             return Response(
                 status=ResponseStatus.SUCCESS,
                 data={
@@ -71,6 +60,72 @@ class UserController(IControllerManager):
                 operation=ZMQConstStrings.register_operation,
                 data={
                     ConstStrings.user_key: user
+                }
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
+
+    def get_all_users(self):
+        try:
+            print("ctrl")
+            request = Request(
+                resource=ZMQConstStrings.auth_resource,
+                operation=ZMQConstStrings.get_all_users_operation,
+                data={}
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
+
+    def get_user_by_id(self, user_id: str):
+        try:
+            request = Request(
+                resource=ZMQConstStrings.auth_resource,
+                operation=ZMQConstStrings.get_user_by_id_operation,
+                data={
+                    ConstStrings.user_id_key: user_id
+                }
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
+
+    def get_user_by_username_and_password(self, username: str, password: str):
+        try:
+            request = Request(
+                resource=ZMQConstStrings.auth_resource,
+                operation=ZMQConstStrings.get_user_by_username_and_password_operation,
+                data={
+                    ConstStrings.username_key: username,
+                    ConstStrings.password_key: password
+                }
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
+
+    def delete_user(self, user_id: str):
+        try:
+            request = Request(
+                resource=ZMQConstStrings.auth_resource,
+                operation=ZMQConstStrings.delete_user_operation,
+                data={
+                    ConstStrings.user_id_key: user_id
+                }
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
+
+    def update_user(self, user_id: str, updated_user_data: dict):
+        try:
+            request = Request(
+                resource=ZMQConstStrings.auth_resource,
+                operation=ZMQConstStrings.update_user_operation,
+                data={
+                    ConstStrings.user_id_key: user_id,
+                    ConstStrings.user_key: updated_user_data
                 }
             )
             return self._zmq_client.send_request(request)
