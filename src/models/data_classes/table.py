@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
-from typing import Dict, List, Optional
+from typing import Dict, List, Literal, Optional
 
 from models.data_classes.person import Person
 
@@ -10,3 +10,5 @@ class Table(BaseModel):
     position: Dict[str, int]
     chairs: int
     table_number: int
+    gender: Literal["male", "female"]
+    shape: Literal["abir", "circle", "square"]
