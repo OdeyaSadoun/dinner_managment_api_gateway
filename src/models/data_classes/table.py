@@ -11,4 +11,4 @@ class Table(BaseModel):
     chairs: int
     table_number: int
     gender: Literal["male", "female"]
-    shape: Literal["abir", "circle", "square"]
+    shape: Literal["rectangle", "circle", "square"]
