@@ -33,14 +33,6 @@ class UserRouter(BaseRouter):
                 return self._ctrl.get_all_users()
             except HTTPException as e:
                 raise e
-
-        @self._router.get("/try", dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
-        async def get_all_users():
-            try:
-                print("router")
-                return self._ctrl.get_all_users()
-            except HTTPException as e:
-                raise e
             
         @self._router.get(HttpConstStrings.get_user_by_id_route)
         async def get_user_by_id(user_id: str):
@@ -59,6 +51,7 @@ class UserRouter(BaseRouter):
         @self._router.patch(HttpConstStrings.delete_user_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def delete_user(user_id: str):
             try:
+                print("user_id api", user_id)
                 return self._ctrl.delete_user(user_id)
             except HTTPException as e:
                 raise e
