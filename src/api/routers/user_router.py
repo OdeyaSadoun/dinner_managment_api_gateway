@@ -34,7 +34,7 @@ class UserRouter(BaseRouter):
             except HTTPException as e:
                 raise e
 
-        @self._router.get("/try")
+        @self._router.get("/try", dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def get_all_users():
             try:
                 print("router")

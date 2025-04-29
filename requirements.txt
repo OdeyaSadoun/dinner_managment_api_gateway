@@ -2,3 +2,6 @@ fastapi
 pyzmq
 uvicorn
 PyJWT
+Pillow>=10.3.0,<11.0.0
+git+https://github.com/labbots/NiimPrintX.git#egg=NiimPrintX
+

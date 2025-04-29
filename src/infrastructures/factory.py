@@ -8,6 +8,8 @@ from api.routers.user_router import UserRouter
 from api.controllers.table_controller import TableController
 from api.routers.table_router import TableRouter
 from api.routers.base_router import BaseRouter
+from api.controllers.print_sticker_controller import PrintStickerController
+from api.routers.print_sticker_router import PrintStickerRouter
 from globals.consts.http_const_strings import HttpConstStrings
 from globals.consts.const_strings import ConstStrings
 from infrastructures.interfaces.ihttp_server_manager import IHTTPServerManager
@@ -32,13 +34,19 @@ class Factory:
 
     def create_table_router(zmq_client: IZMQClientManager) -> BaseRouter:
         table_controller = TableController(zmq_client)
-        return TableRouter(HttpConstStrings.table_prefix, table_controller)
+        return TableRouter(HttpConstStrings.table_prefix, table_controller)    
+    
+    def create_print_router() -> BaseRouter:
+        print_controller = PrintStickerController()
+        print("in factory")
+        return PrintStickerRouter(HttpConstStrings.print_prefix, print_controller)
 
     def create_routes(zmq_client: IZMQClientManager) -> List[BaseRouter]:
         return [
             Factory.create_person_router(zmq_client),
             Factory.create_table_router(zmq_client),
-            Factory.create_user_router(zmq_client)
+            Factory.create_user_router(zmq_client),
+            Factory.create_print_router()
         ]
 
     def create_http_server(routes: List[BaseRouter]) -> IHTTPServerManager:

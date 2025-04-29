@@ -18,7 +18,7 @@ class Response():
         return json.dumps({
             ZMQConstStrings.status_identifier: self.status.name,
             ZMQConstStrings.data_identifier: self.data
-        })
+        }, default=str)
 
     @classmethod
     def from_json(self, json_str: str) -> Any:

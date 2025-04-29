@@ -12,6 +12,7 @@ class HttpConstStrings:
     auth_prefix="/auth"
     person_prefix="/person"
     table_prefix="/table"
+    print_prefix ="/print"
 
     # ? Routes
     login_route = "/login"
@@ -21,6 +22,7 @@ class HttpConstStrings:
     get_user_by_username_and_password_route = "/get_user_by_username_and_password"
     delete_user_route = "/delete_user/{user_id}"
     update_user_route = "/update_user/{user_id}"
+    print_sticker_route = "/print_sticker"
 
     get_all_people_route = ""
     get_person_by_id_route = "/{person_id}"
