@@ -48,6 +48,8 @@ class TableController(IControllerManager):
                     ConstStrings.table_key: table
                 }
             )
+            response = self._zmq_client.send_request(request)
+            print("response api", response)
             return self._zmq_client.send_request(request)
         except Exception as e:
             raise HTTPException(
