@@ -59,6 +59,7 @@ class UserRouter(BaseRouter):
         @self._router.put(HttpConstStrings.update_user_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def update_user(user_id: str, updated_user_data: dict):
             try:
+                print("updated_user_data", updated_user_data)
                 return self._ctrl.update_user(user_id, updated_user_data)
             except HTTPException as e:
                 raise e

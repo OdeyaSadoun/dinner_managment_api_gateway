@@ -9,5 +9,5 @@ class Person(BaseModel):
     table_number: int
     is_reach_the_dinner: bool
     gender: Literal["male", "female"]
-    contact_person: str
-    add_manual: bool
+    contact_person: Optional[str]
+    add_manual:bool

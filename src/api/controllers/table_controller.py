@@ -68,7 +68,7 @@ class TableController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
             
-    def update_table(self, table_id: str, table: Table):
+    def update_table(self, table_id: str, table: dict):
         try:
             request = Request(
                 resource=ZMQConstStrings.table_resource,
