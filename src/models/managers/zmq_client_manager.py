@@ -1,5 +1,8 @@
 import zmq
+from dotenv import load_dotenv
+import os
 
+load_dotenv()  
 from infrastructures.interfaces.izmq_client_manager import IZMQClientManager
 from globals.consts.const_strings import ConstStrings
 from models.data_classes.zmq_response import Response

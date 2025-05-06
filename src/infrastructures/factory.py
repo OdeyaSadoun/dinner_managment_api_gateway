@@ -1,6 +1,8 @@
 import os
 from typing import List
+from dotenv import load_dotenv
 
+load_dotenv()  
 from api.controllers.person_controller import PersonController
 from api.routers.person_router import PersonRouter
 from api.controllers.user_controller import UserController
@@ -20,8 +22,9 @@ from models.managers.zmq_client_manager import ZMQClientManager
 
 class Factory:
     def create_zmq_client() -> IZMQClientManager:
-        host = os.getenv(ConstStrings.business_logic_host_env_key)
+        host = os.getenv(ConstStrings.localhost_env_key)
         port = int(os.getenv(ConstStrings.business_logic_port_env_key))
+        print(host, port)
         return ZMQClientManager(host, port)
 
     def create_user_router(zmq_client: IZMQClientManager) -> BaseRouter:

@@ -19,5 +19,5 @@ class ConstStrings:
     localhost_env_key = "LOCAL_HOST"
     zmq_server_host_env_key = "ZMQ_SERVER_HOST"
     business_logic_host_env_key = "BUSINESS_LOGIC_HOST"
-    http_port_evn_key = "HTTP_PORT"
+    http_port_evn_key = "API_GATEWAY_PORT"
     business_logic_port_env_key = "BUSINESS_LOGIC_PORT"

@@ -3,7 +3,9 @@ from typing import List
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+from dotenv import load_dotenv
 
+load_dotenv()  
 from api.routers.base_router import BaseRouter
 from globals.consts.const_strings import ConstStrings
 from globals.consts.http_const_strings import HttpConstStrings

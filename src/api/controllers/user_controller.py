@@ -2,7 +2,9 @@ from datetime import datetime, timedelta
 import os
 from fastapi import HTTPException
 from jwt import encode
+from dotenv import load_dotenv
 
+load_dotenv()  
 from globals.enums.response_status import ResponseStatus
 from models.data_classes.zmq_response import Response
 from models.data_classes.login_user import LoginUser
@@ -29,6 +31,7 @@ class UserController(IControllerManager):
                 }
             )
             response = self._zmq_client.send_request(request)
+            print("ZMQ response:", response.data)
             if response.status.value != "success":
                 return response
 
@@ -37,7 +40,7 @@ class UserController(IControllerManager):
                 {
                     "username": response.data.get("username"),
                     "role": response.data.get("role"),  
-                    "exp": int(exp.timestamp()), 
+                    "exp": datetime.utcnow() + timedelta(hours=24)
                 },
                 os.getenv("JWT_SECRET"),
                 algorithm=os.getenv("JWT_ALGORITHM")

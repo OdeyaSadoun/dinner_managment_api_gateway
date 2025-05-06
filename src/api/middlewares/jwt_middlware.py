@@ -2,6 +2,9 @@ import os
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer
 import jwt
+from dotenv import load_dotenv
+
+load_dotenv()  
 
 class JWTMiddleware(HTTPBearer):
     def __init__(self, roles: list[str] = None):
