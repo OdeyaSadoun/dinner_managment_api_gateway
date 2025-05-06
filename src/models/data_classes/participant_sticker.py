@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 class ParticipantSticker(BaseModel):
-    name: str
-    phone: str
-    table_number: str
+    full_name: str
+    gender: str 
+    table_number: int

@@ -12,10 +12,9 @@ class PrintStickerRouter(BaseRouter):
         self.setup_routes()
         
     def setup_routes(self) -> None:
-        @self._router.get(HttpConstStrings.print_sticker_route)
-        async def print_sticker():
+        @self._router.post(HttpConstStrings.print_sticker_route)
+        async def print_sticker(data: ParticipantSticker):
             try:
-                print("route")
-                return self._ctrl.print_sticker()
+                return self._ctrl.print_sticker(data)
             except HTTPException as e:
                 raise e
