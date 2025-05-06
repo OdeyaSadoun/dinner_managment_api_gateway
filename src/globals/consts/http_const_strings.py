@@ -18,6 +18,7 @@ class HttpConstStrings:
     login_route = "/login"
     register_route = "/register"
     get_all_users_route = "/get_all_users"
+    get_manual_people_route = "/get_manual_people"
     get_user_by_id_route = "/get_user_by_id/{user_id}"
     get_user_by_username_and_password_route = "/get_user_by_username_and_password"
     delete_user_route = "/delete_user/{user_id}"

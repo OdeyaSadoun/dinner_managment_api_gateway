@@ -20,7 +20,13 @@ class PersonRouter(BaseRouter):
                 return self._ctrl.get_all_people()
             except HTTPException as e:
                 raise e
-
+        @self._router.get(HttpConstStrings.get_manual_people_route)
+        async def get_manual_people():
+            try:
+                return self._ctrl.get_manual_people()
+            except HTTPException as e:
+                raise e
+            
         @self._router.get(HttpConstStrings.get_person_by_id_route)
         async def get_person_by_id(person_id: str):
             try:

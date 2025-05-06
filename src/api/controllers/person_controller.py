@@ -24,7 +24,18 @@ class PersonController(IControllerManager):
         except Exception as e:
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
-
+    
+    def get_manual_people(self):
+        try:
+            request = Request(
+                resource=ZMQConstStrings.person_resource,
+                operation=ZMQConstStrings.get_manual_people_operation
+            )
+            return self._zmq_client.send_request(request)
+        except Exception as e:
+            raise HTTPException(
+                status_code=Consts.error_status_code, detail=str(e))
+            
     def get_person_by_id(self, person_id: str):
         try:
             request = Request(

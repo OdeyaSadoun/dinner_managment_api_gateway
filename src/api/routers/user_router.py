@@ -29,7 +29,6 @@ class UserRouter(BaseRouter):
         @self._router.get(HttpConstStrings.get_all_users_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def get_all_users():
             try:
-                print("router")
                 return self._ctrl.get_all_users()
             except HTTPException as e:
                 raise e
