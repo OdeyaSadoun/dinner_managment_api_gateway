@@ -26,6 +26,7 @@ class HttpConstStrings:
     print_sticker_route = "/print_sticker"
 
     get_all_people_route = ""
+    import_people_from_csv_route = "/import_csv"
     get_person_by_id_route = "/{person_id}"
     create_person_route = ""
     update_person_route = "/{person_id}"

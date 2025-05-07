@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends, File, HTTPException, UploadFile
 
 from api.routers.base_router import BaseRouter
 from api.middlewares.jwt_middlware import JWTMiddleware
@@ -32,6 +32,14 @@ class PersonRouter(BaseRouter):
         async def get_person_by_id(person_id: str):
             try:
                 return self._ctrl.get_person_by_id(person_id)
+            except HTTPException as e:
+                raise e
+            
+        @self._router.post("/import_csv", dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
+        @self._router.post(HttpConstStrings.import_people_from_csv_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
+        async def import_people_from_csv(file: UploadFile = File(...)):
+            try:
+                return self._ctrl.import_people_from_csv(file)
             except HTTPException as e:
                 raise e
 

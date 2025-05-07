@@ -24,6 +24,7 @@ class ZMQConstStrings:
     delete_user_operation = "delete_user"
     update_user_operation = "update_user"
     get_manual_people_operation = "get_manual_people"
+    import_people_from_csv_operation = "import_people_from_csv"
 
     get_all_people_operation = "get_all_people"
     get_person_by_id_operation = "get_person_by_id"
