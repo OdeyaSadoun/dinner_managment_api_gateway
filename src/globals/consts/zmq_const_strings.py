@@ -23,6 +23,7 @@ class ZMQConstStrings:
     get_user_by_username_and_password_operation = "get_user_by_username_and_password"
     delete_user_operation = "delete_user"
     update_user_operation = "update_user"
+    get_manual_people_operation = "get_manual_people"
 
     get_all_people_operation = "get_all_people"
     get_person_by_id_operation = "get_person_by_id"

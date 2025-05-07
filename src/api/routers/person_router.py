@@ -14,16 +14,17 @@ class PersonRouter(BaseRouter):
         self.setup_routes()
 
     def setup_routes(self) -> None:
-        @self._router.get(HttpConstStrings.get_all_people_route)
-        async def get_all_people():
-            try:
-                return self._ctrl.get_all_people()
-            except HTTPException as e:
-                raise e
         @self._router.get(HttpConstStrings.get_manual_people_route)
         async def get_manual_people():
             try:
                 return self._ctrl.get_manual_people()
+            except HTTPException as e:
+                raise e
+            
+        @self._router.get(HttpConstStrings.get_all_people_route)
+        async def get_all_people():
+            try:
+                return self._ctrl.get_all_people()
             except HTTPException as e:
                 raise e
             
