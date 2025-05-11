@@ -5,7 +5,7 @@ from typing import Literal, Optional
 
 class Person(BaseModel):
     name: str
-    phone: str
+    phone: Optional[str]
     table_number: int
     is_reach_the_dinner: bool
     gender: Literal["male", "female"]

@@ -78,18 +78,15 @@ class PersonController(IControllerManager):
                     "name": name,
                     "table_number": table_number,
                     "gender": gender,
-                    "add_manual": True,
+                    "add_manual": False,
                     "is_reach_the_dinner": True,
                     "is_active": True
                 })
-            print("👥 משתתפים שנשלחו:", people)
-
             request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.import_people_from_csv_operation,
                 data={ConstStrings.people_key: people}
             )
-
             return self._zmq_client.send_request(request)
 
         except Exception as e:

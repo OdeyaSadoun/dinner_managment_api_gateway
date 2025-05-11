@@ -53,6 +53,7 @@ class PersonRouter(BaseRouter):
         @self._router.put(HttpConstStrings.update_person_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def update_person(person_id: str, person: Person):
             try:
+                print("person", person)
                 return self._ctrl.update_person(person_id, person)
             except HTTPException as e:
                 raise e
