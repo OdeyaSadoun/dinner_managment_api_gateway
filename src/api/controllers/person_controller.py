@@ -72,14 +72,17 @@ class PersonController(IControllerManager):
                 if gender is None:
                     continue
 
+                is_reach = row.get("מגיעים תשפה", "").strip().upper() == "TRUE"
+
                 people.append({
                     "name": name,
                     "table_number": table_number,
                     "gender": gender,
                     "add_manual": False,
-                    "is_reach_the_dinner": True,
+                    "is_reach_the_dinner": is_reach,
                     "is_active": True
                 })
+
             request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.import_people_from_csv_operation,
