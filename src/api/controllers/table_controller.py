@@ -77,20 +77,15 @@ class TableController(IControllerManager):
                     gender = "female"
 
                 # ברירות מחדל
-                color = "default"
                 shape = "square"
-                placement = "default"
 
                 # מיפוי לפי סוג שולחן
                 if "בימת כבוד" in raw_type:
-                    shape = "rectangle"
-                    chairs = 43
-                    placement = "one_side"
-                    color = "gold"
+                    shape = "bima"
                 elif "רזרבה" in raw_type:
-                    color = "green"
+                    shape = "reserva"
                 elif "VIP" in raw_type:
-                    color = "blue"
+                    shape = "vip"
                 elif "אבירים" in raw_type:
                     shape = "rectangle"
 
@@ -99,13 +94,11 @@ class TableController(IControllerManager):
                     "chairs": chairs,
                     "shape": shape,
                     "gender": gender,
-                    "color": color,
-                    "placement": placement,
-                    "position": {"x": (idx % 20) * 150, "y": (idx // 20) * 120},
+                    "position": {"x": (idx % 20) * 130, "y": (idx // 20) * 120},
                     "people_list": [],
                     "is_active": True
                 })
-
+            print(f"✅ נקלטו {len(tables)} שולחנות מתוך הקובץ")
             request = Request(
                 resource=ZMQConstStrings.table_resource,
                 operation=ZMQConstStrings.import_tables_from_csv_operation,
