@@ -9,6 +9,9 @@ from models.data_classes.person import Person
 from models.data_classes.table import Table
 from models.data_classes.zmq_request import Request
 
+from fastapi import UploadFile, HTTPException
+import csv
+from io import StringIO
 
 class TableController(IControllerManager):
     def __init__(self, zmq_client: IZMQClientManager) -> None:
@@ -52,6 +55,66 @@ class TableController(IControllerManager):
         except Exception as e:
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
+
+    def import_tables_from_csv(self, file: UploadFile):
+        try:
+            contents = file.file.read().decode("cp1255")  # קידוד עברי
+            csv_reader = csv.DictReader(StringIO(contents))
+
+            tables = []
+            for idx, row in enumerate(csv_reader):
+                try:
+                    table_number = int(row.get("מספר שולחן", "").strip())
+                    raw_type = row.get("סוג שולחן", "").strip()
+                    chairs = int(row.get("כמות כסאות", "").strip())
+                except Exception:
+                    continue  # דלג על שורה לא תקינה
+
+                # 🟡 קביעה חכמה של מגדר
+                if any(term in raw_type for term in ["בימת כבוד", "רזרבה", "VIP", "גברים"]):
+                    gender = "male"
+                else:
+                    gender = "female"
+
+                # ברירות מחדל
+                color = "default"
+                shape = "square"
+                placement = "default"
+
+                # מיפוי לפי סוג שולחן
+                if "בימת כבוד" in raw_type:
+                    shape = "rectangle"
+                    chairs = 43
+                    placement = "one_side"
+                    color = "gold"
+                elif "רזרבה" in raw_type:
+                    color = "green"
+                elif "VIP" in raw_type:
+                    color = "blue"
+                elif "אבירים" in raw_type:
+                    shape = "rectangle"
+
+                tables.append({
+                    "table_number": table_number,
+                    "chairs": chairs,
+                    "shape": shape,
+                    "gender": gender,
+                    "color": color,
+                    "placement": placement,
+                    "position": {"x": (idx % 20) * 150, "y": (idx // 20) * 120},
+                    "people_list": [],
+                    "is_active": True
+                })
+
+            request = Request(
+                resource=ZMQConstStrings.table_resource,
+                operation=ZMQConstStrings.import_tables_from_csv_operation,
+                data={ConstStrings.tables_key: tables}
+            )
+            return self._zmq_client.send_request(request)
+
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"שגיאה בייבוא השולחנות: {str(e)}")
 
     def update_table_position(self, table_id: str, position: dict):
         try:

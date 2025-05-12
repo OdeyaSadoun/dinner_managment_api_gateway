@@ -34,6 +34,7 @@ class ZMQConstStrings:
     seat_and_add_person_to_table_operation = "seat_and_add_person_to_table"
     unseat_and_remove_person_from_table_operation = "unseat_and_remove_person_from_table"
     delete_person_operation = "delete_person"
+    import_tables_from_csv_operation = "import_tables_from_csv"
 
     get_all_tables_operation = "get_all_tables"
     get_table_by_id_operation = "get_table_by_id"

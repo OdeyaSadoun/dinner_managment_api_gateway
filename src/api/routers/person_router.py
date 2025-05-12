@@ -35,7 +35,6 @@ class PersonRouter(BaseRouter):
             except HTTPException as e:
                 raise e
             
-        @self._router.post("/import_csv", dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         @self._router.post(HttpConstStrings.import_people_from_csv_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def import_people_from_csv(file: UploadFile = File(...)):
             try:

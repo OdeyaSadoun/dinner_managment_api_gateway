@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends, File, HTTPException, UploadFile
 
 from api.routers.base_router import BaseRouter
 from api.middlewares.jwt_middlware import JWTMiddleware
@@ -40,7 +40,14 @@ class TableRouter(BaseRouter):
                 return self._ctrl.update_table_position(table_id, position["position"])
             except HTTPException as e:
                 raise e
-
+            
+        @self._router.post("/import_csv", dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
+        async def import_tables_from_csv(file: UploadFile = File(...)):
+            try:
+                return self._ctrl.import_tables_from_csv(file)
+            except HTTPException as e:
+                raise e
+            
         @self._router.put(HttpConstStrings.update_table_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
         async def update_table(table_id: str, table: Table):
             try:

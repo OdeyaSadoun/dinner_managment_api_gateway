@@ -15,6 +15,7 @@ class ConstStrings:
     token_key = "token"
     user_id_key = "user_id"
     people_key = "people"
+    tables_key = "tables"
     
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
