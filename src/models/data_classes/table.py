@@ -10,5 +10,6 @@ class Table(BaseModel):
     position: Dict[str, int]
     chairs: int
     table_number: int
+    rotation: Optional[int] = 0
     gender: Literal["male", "female"]
     shape: Literal["rectangle", "circle", "square", "vip", "reserva", "bima"]
