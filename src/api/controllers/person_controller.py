@@ -59,8 +59,6 @@ class PersonController(IControllerManager):
 
             people = []
             for row in csv_reader:
-                print("🔑 מפתחות בשורה:", list(row.keys()))
-
                 name = row.get("משפחה ופרטי", "").strip()
                 location = row.get("מיקום", "").strip()
                 try:
