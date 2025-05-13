@@ -76,6 +76,6 @@ class PersonRouter(BaseRouter):
         async def delete_person(person_id: str, person_to_delete: DeleteParticipantRequest):
             try:
                 print("delete api")
-                return self._ctrl.delete_person(person_id, person_to_delete.table_number)
+                return self._ctrl.delete_person(person_id, person_to_delete.table_number, person_to_delete.is_reach_the_dinner)
             except HTTPException as e:
                 raise e
