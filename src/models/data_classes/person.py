@@ -11,3 +11,4 @@ class Person(BaseModel):
     gender: Literal["male", "female"]
     contact_person: Optional[str]
     add_manual:bool
+    original_is_reach_the_dinner: Optional[bool]

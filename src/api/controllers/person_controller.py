@@ -109,6 +109,7 @@ class PersonController(IControllerManager):
 
     def update_person(self, person_id: str, person: Person):
         try:
+            print("person", person)
             request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.update_person_operation,
