@@ -151,12 +151,13 @@ class PersonController(IControllerManager):
             raise HTTPException(
                 status_code=Consts.error_status_code, detail=str(e))
 
-    def delete_person(self, person_id: str):
+    def delete_person(self, person_id: str, table_number: int):
         try:
             request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.delete_person_operation,
-                data={ConstStrings.person_id_key: person_id}
+                data={ConstStrings.person_id_key: person_id, 
+                      ConstStrings.table_number_key: table_number}
             )
             return self._zmq_client.send_request(request)
         except Exception as e:

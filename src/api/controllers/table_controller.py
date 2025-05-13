@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 
+from globals.enums.response_status import ResponseStatus
 from globals.consts.zmq_const_strings import ZMQConstStrings
 from globals.consts.consts import Consts
 from globals.consts.const_strings import ConstStrings
@@ -16,6 +17,63 @@ from io import StringIO
 class TableController(IControllerManager):
     def __init__(self, zmq_client: IZMQClientManager) -> None:
         self._zmq_client = zmq_client
+        
+    def sync_tables_with_people(self):
+        try:
+            # שלב 1 – קבלת כל האנשים
+            people_response = self._zmq_client.send_request(Request(
+                resource=ZMQConstStrings.person_resource,
+                operation=ZMQConstStrings.get_all_people_operation
+            ))
+
+            if people_response.status != ResponseStatus.SUCCESS:
+                raise Exception("שגיאה בקבלת נתוני משתתפים")
+
+            people = people_response.data.get(ConstStrings.people_key, [])
+
+            # שלב 2 – קבלת כל השולחנות
+            tables_response = self._zmq_client.send_request(Request(
+                resource=ZMQConstStrings.table_resource,
+                operation=ZMQConstStrings.get_all_tables_operation
+            ))
+
+            if tables_response.status != ResponseStatus.SUCCESS:
+                raise Exception("שגיאה בקבלת נתוני שולחנות")
+
+            tables = tables_response.data.get("tables", [])
+
+            # שלב 3 – הכנת map של table_number ➝ list of people (גם אם ריק!)
+            table_to_people = {table["table_number"]: [] for table in tables}
+
+            for person in people:
+                table_number = person.get("table_number")
+                if table_number is not None and table_number in table_to_people:
+                    table_to_people[table_number].append({
+                        "id": person["id"],
+                        "name": person["name"],
+                        "gender": person["gender"],
+                        "table_number": table_number,
+                        "is_reach_the_dinner": person["is_reach_the_dinner"],
+                        "is_active": person["is_active"]
+                    })
+
+            # שלב 4 – שליחת סנכרון לכל שולחן
+            results = []
+            for table_number, people_list in table_to_people.items():
+                response = self._zmq_client.send_request(Request(
+                    resource=ZMQConstStrings.table_resource,
+                    operation=ZMQConstStrings.sync_people_list_operation,
+                    data={
+                        ConstStrings.table_number_key: table_number,
+                        ConstStrings.people_list_key: people_list
+                    }
+                ))
+                results.append({"table_number": table_number, "status": response.status})
+
+            return {"status": "success", "results": results}
+
+        except Exception as e:
+            raise HTTPException(status_code=Consts.error_status_code, detail=str(e))
 
     def get_all_tables(self):
         try:

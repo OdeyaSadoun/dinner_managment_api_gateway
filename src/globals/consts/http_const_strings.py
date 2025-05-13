@@ -24,6 +24,7 @@ class HttpConstStrings:
     delete_user_route = "/delete_user/{user_id}"
     update_user_route = "/update_user/{user_id}"
     print_sticker_route = "/print_sticker"
+    sync_tables_with_people_route = "/sync_tables_with_people"
 
     get_all_people_route = ""
     import_people_from_csv_route = "/import_csv"

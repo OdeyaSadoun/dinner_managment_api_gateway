@@ -2,6 +2,7 @@ from fastapi import Depends, File, HTTPException, UploadFile
 
 from api.routers.base_router import BaseRouter
 from api.middlewares.jwt_middlware import JWTMiddleware
+from models.data_classes.delete_person_request import DeleteParticipantRequest
 from models.data_classes.seat_and_unseat_request import SeatAndUnseatRequest
 from models.data_classes.person import Person
 from infrastructures.interfaces.icontroller_manager import IControllerManager
@@ -72,9 +73,9 @@ class PersonRouter(BaseRouter):
                 raise e
 
         @self._router.patch(HttpConstStrings.delete_person_route, dependencies=[Depends(JWTMiddleware(roles=["admin"]))])
-        async def delete_person(person_id: str):
+        async def delete_person(person_id: str, person_to_delete: DeleteParticipantRequest):
             try:
                 print("delete api")
-                return self._ctrl.delete_person(person_id)
+                return self._ctrl.delete_person(person_id, person_to_delete.table_number)
             except HTTPException as e:
                 raise e

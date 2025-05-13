@@ -16,7 +16,8 @@ class ConstStrings:
     user_id_key = "user_id"
     people_key = "people"
     tables_key = "tables"
-    
+    people_list_key = "people_list"
+    table_number_key = "table_number"
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
     zmq_server_host_env_key = "ZMQ_SERVER_HOST"

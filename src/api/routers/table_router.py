@@ -19,6 +19,13 @@ class TableRouter(BaseRouter):
                 return self._ctrl.get_all_tables()
             except HTTPException as e:
                 raise e
+            
+        @self._router.post(HttpConstStrings.sync_tables_with_people_route)
+        async def sync_tables_with_people():
+            try:
+                return self._ctrl.sync_tables_with_people()
+            except HTTPException as e:
+                raise e
 
         @self._router.get(HttpConstStrings.get_table_by_id_route)
         async def get_table_by_id(table_id: str):
