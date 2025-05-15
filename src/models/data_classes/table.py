@@ -6,7 +6,7 @@ from models.data_classes.person import Person
 
 
 class Table(BaseModel):
-    people_list: List[Person]
+    people_list: List[str]
     position: Dict[str, int]
     chairs: int
     table_number: int
