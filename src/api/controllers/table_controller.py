@@ -99,7 +99,7 @@ class TableController(IControllerManager):
                     "people_list": [],
                     "is_active": True
                 })
-            print(f"✅ נקלטו {len(tables)} שולחנות מתוך הקובץ")
+            print(f"נקלטו {len(tables)} שולחנות מתוך הקובץ")
             request = Request(
                 resource=ZMQConstStrings.table_resource,
                 operation=ZMQConstStrings.import_tables_from_csv_operation,

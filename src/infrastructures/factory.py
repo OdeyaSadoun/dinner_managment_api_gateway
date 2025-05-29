@@ -55,7 +55,7 @@ class Factory:
     def create_http_server(routes: List[BaseRouter]) -> IHTTPServerManager:
         return HTTPServerManager(routes)
 
-    @staticmethod
-    def create_all() -> List[BaseRouter]:
+    def create_all() -> None:
         zmq_client = Factory.create_zmq_client()
-        return Factory.create_routes(zmq_client)
+        routes = Factory.create_routes(zmq_client)
+        Factory.create_http_server(routes)
