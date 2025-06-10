@@ -25,6 +25,7 @@ class PersonRouter(BaseRouter):
         @self._router.get(HttpConstStrings.get_all_people_route)
         async def get_all_people():
             try:
+                print("in router")
                 return self._ctrl.get_all_people()
             except HTTPException as e:
                 raise e

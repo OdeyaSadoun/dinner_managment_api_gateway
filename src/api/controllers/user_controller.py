@@ -30,6 +30,7 @@ class UserController(IControllerManager):
                     ConstStrings.user_key: user
                 }
             )
+            print("before send")
             response = self._zmq_client.send_request(request)
             print("ZMQ response:", response.data)
             if response.status.value != "success":

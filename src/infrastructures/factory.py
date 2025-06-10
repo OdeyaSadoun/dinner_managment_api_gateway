@@ -56,6 +56,7 @@ class Factory:
         return HTTPServerManager(routes)
 
     def create_all() -> None:
+        print(">>> Factory.create_all called")
         zmq_client = Factory.create_zmq_client()
         routes = Factory.create_routes(zmq_client)
         Factory.create_http_server(routes)

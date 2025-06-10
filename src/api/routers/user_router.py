@@ -15,6 +15,7 @@ class UserRouter(BaseRouter):
         @self._router.post(HttpConstStrings.login_route)
         async def login(user: LoginUser):
             try:
+                print("234567890-09876543")
                 return self._ctrl.login(user)
             except HTTPException as e:
                 raise e
