@@ -4,3 +4,5 @@ uvicorn
 PyJWT
 Pillow>=10.3.0,<11.0.0
 pywin32
+python-dotenv
+python-multipart

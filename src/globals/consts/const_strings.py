@@ -21,6 +21,7 @@ class ConstStrings:
     is_reach_the_dinner_key = "is_reach_the_dinner"
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
+    host_env_key = "HOST"
     zmq_server_host_env_key = "ZMQ_SERVER_HOST"
     business_logic_host_env_key = "BUSINESS_LOGIC_HOST"
     http_port_evn_key = "API_GATEWAY_PORT"

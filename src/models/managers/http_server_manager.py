@@ -1,9 +1,10 @@
 import os
+import threading
 from typing import List
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 from dotenv import load_dotenv
+from uvicorn import Config, Server
 
 load_dotenv()  
 from api.routers.base_router import BaseRouter
@@ -23,6 +24,7 @@ class HTTPServerManager(IHTTPServerManager):
         self._run_server()
 
     def _include_routers(self) -> None:
+        print("ROUTERS:", self._routers)
         for router in self._routers:
             self._app.include_router(router.get_router(), prefix=router.prefix)
 
@@ -31,9 +33,17 @@ class HTTPServerManager(IHTTPServerManager):
             CORSMiddleware,
             allow_origins=[HttpConstStrings.all_sources], 
             allow_credentials=True,
-            allow_methods=[HttpConstStrings.get_method, HttpConstStrings.post_method, HttpConstStrings.put_method, HttpConstStrings.delete_method, HttpConstStrings.patch_method], 
+            allow_methods=[HttpConstStrings.all_sources], 
             allow_headers=[HttpConstStrings.all_sources],
         )
+        
 
     def _run_server(self) -> None:
-        uvicorn.run(self._app, host=os.getenv(ConstStrings.localhost_env_key), port=int(os.getenv(ConstStrings.http_port_evn_key)))
+        host = os.getenv(ConstStrings.host_env_key)
+        port = int(os.getenv(ConstStrings.http_port_evn_key))
+        print(f"run server on {host}:{port}")
+
+        config = Config(app=self._app, host=host, port=port, log_level="info")
+        server = Server(config)
+
+        server.run()
