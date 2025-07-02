@@ -1,15 +1,32 @@
 import win32print
 import win32ui
+import requests  
 
 
 class PrintStickerController:
-    def print_sticker(self, data):
+    def print_sticker(self, data, client_ip: str):
         name = data.full_name
         gender = "נשים" if data.gender == "female" else "גברים"
         table_number = f"שולחן {data.table_number}"
+        port = data.client_port
 
+        print("port", port)
+        try:
+            # ניסיון לשלוח למחשב של המשתמש
+            response = requests.post(f"http://{client_ip}:{port}/print", json={
+                "name": name,
+                "gender": gender,
+                "table_number": table_number
+            }, timeout=1)
+
+            if response.ok:
+                return {"status": "success", "message": "Sticker printed from client"}
+        except Exception as e:
+            print(f"שגיאה בהדפסה מהמחשב של המשתמש ({client_ip}):", e)
+
+        # אם לא הצליח – הדפס מקומית כרגיל
         self._print_to_printer(name, gender, table_number)
-        return {"status": "success", "message": "Sticker printed successfully"}
+        return {"status": "success", "message": "Sticker printed from server"}
 
     def _print_to_printer(self, name, gender, table_number):
         printer_name = "LABEL"
