@@ -19,6 +19,15 @@ class ConstStrings:
     people_list_key = "people_list"
     table_number_key = "table_number"
     is_reach_the_dinner_key = "is_reach_the_dinner"
+    name_key = "name"
+    gender_key = "gender"
+    add_manual_key = "add_manual"
+    is_active_key = "is_active"
+    male_key = "male"
+    female_key = "female"
+    true_key = "TRUE"
+    location_key = "location"
+    
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
     host_env_key = "HOST"
@@ -26,3 +35,17 @@ class ConstStrings:
     business_logic_host_env_key = "BUSINESS_LOGIC_HOST"
     http_port_evn_key = "API_GATEWAY_PORT"
     business_logic_port_env_key = "BUSINESS_LOGIC_PORT"
+    
+    # ---
+    excel_coding ="cp1255"
+    empty_str = ""
+    
+    # 2025 columns name:
+    first_last_name_column = "משפחה ופרטי"
+    location_column = "מיקום"
+    reach_male_column = "מגיע ג"
+    reach_female_column = "מגיע נ"
+    reach_all_column = "מגיעים תשפה"
+    bimat_kavod = "בימת כבוד"
+    
+    

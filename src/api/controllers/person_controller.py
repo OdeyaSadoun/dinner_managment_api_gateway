@@ -1,8 +1,7 @@
-from fastapi import HTTPException, Response, UploadFile
 import csv
 from io import StringIO
+from fastapi import HTTPException, UploadFile
 
-from globals.enums.response_status import ResponseStatus
 from globals.consts.consts import Consts
 from globals.consts.const_strings import ConstStrings
 from globals.consts.zmq_const_strings import ZMQConstStrings
@@ -52,35 +51,41 @@ class PersonController(IControllerManager):
                 status_code=Consts.error_status_code, detail=str(e))
 
     def import_people_from_csv(self, file: UploadFile):
+        column_mapping = {
+        ConstStrings.name_key: ConstStrings.first_last_name_column,
+        ConstStrings.location_key: ConstStrings.location_column,
+        ConstStrings.male_key: ConstStrings.reach_male_column,
+        ConstStrings.female_key: ConstStrings.reach_female_column,
+        ConstStrings.is_reach_the_dinner_key: ConstStrings.reach_all_column
+        }
         try:
-            print("import_people_from_csv")
-            contents = file.file.read().decode("cp1255")  # קידוד עברי של אקסל
+            contents = file.file.read().decode(ConstStrings.excel_coding)
             csv_reader = csv.DictReader(StringIO(contents))
 
             people = []
             for row in csv_reader:
-                name = row.get("משפחה ופרטי", "").strip()
-                location = row.get("מיקום", "").strip()
+                name = row.get(column_mapping[ConstStrings.name_key], ConstStrings.empty_str).strip()
+                location = row.get(column_mapping[ConstStrings.location_key], ConstStrings.empty_str).strip()
                 try:
-                    table_number = 0 if location == "בימת כבוד" else int(location)
+                    table_number = 0 if location == ConstStrings.bimat_kavod else int(location)
                 except ValueError:
-                    table_number = -1                
-                is_male = row.get("מגיע ג", "").strip().upper() == "TRUE"
-                is_female = row.get("מגיע נ", "").strip().upper() == "TRUE"
-                gender = "male" if is_male else "female" if is_female else None
+                    table_number = -1
 
+                is_male = row.get(column_mapping[ConstStrings.male_key], ConstStrings.empty_str).strip().upper() == ConstStrings.true_key
+                is_female = row.get(column_mapping[ConstStrings.female_key], ConstStrings.empty_str).strip().upper() == ConstStrings.true_key
+                gender = ConstStrings.male_key if is_male else ConstStrings.female_key if is_female else None
                 if gender is None:
                     continue
 
-                is_reach = row.get("מגיעים תשפה", "").strip().upper() == "TRUE"
+                is_reach = row.get(column_mapping[ConstStrings.is_reach_the_dinner_key], ConstStrings.empty_str).strip().upper() == ConstStrings.true_key
 
                 people.append({
-                    "name": name,
-                    "table_number": table_number,
-                    "gender": gender,
-                    "add_manual": False,
-                    "is_reach_the_dinner": is_reach,
-                    "is_active": True
+                    ConstStrings.name_key: name,
+                    ConstStrings.table_number_key: table_number,
+                    ConstStrings.gender_key: gender,
+                    ConstStrings.add_manual_key: False,
+                    ConstStrings.is_reach_the_dinner_key: is_reach,
+                    ConstStrings.is_active_key: True
                 })
 
             request = Request(
@@ -91,7 +96,7 @@ class PersonController(IControllerManager):
             return self._zmq_client.send_request(request)
 
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"שגיאה בייבוא: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"error in import: {str(e)}")
 
     def create_person(self, person: Person):
         try:
@@ -109,7 +114,6 @@ class PersonController(IControllerManager):
 
     def update_person(self, person_id: str, person: Person):
         try:
-            print("person", person)
             request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.update_person_operation,
@@ -125,7 +129,6 @@ class PersonController(IControllerManager):
 
     def seat_person(self, person_id: str, table_id: str):
         try:
-            print("seat")
             request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.seat_and_add_person_to_table_operation,
@@ -139,14 +142,12 @@ class PersonController(IControllerManager):
             
     def unseat_person(self, person_id: str, table_id: str):
         try:
-            print("unseat person in api")
             request = Request(
                 resource=ZMQConstStrings.person_resource,
                 operation=ZMQConstStrings.unseat_and_remove_person_from_table_operation,
                 data={ConstStrings.person_id_key: person_id,
                       ConstStrings.table_id_key: table_id}
             )
-            print("request", request)
             return self._zmq_client.send_request(request)
         except Exception as e:
             raise HTTPException(
