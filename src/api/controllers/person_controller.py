@@ -56,7 +56,8 @@ class PersonController(IControllerManager):
         ConstStrings.location_key: ConstStrings.location_column,
         ConstStrings.male_key: ConstStrings.reach_male_column,
         ConstStrings.female_key: ConstStrings.reach_female_column,
-        ConstStrings.is_reach_the_dinner_key: ConstStrings.reach_all_column
+        ConstStrings.is_reach_the_dinner_key: ConstStrings.reach_all_column,
+        ConstStrings.contact_person_key: ConstStrings.contact_person_column
         }
         try:
             contents = file.file.read().decode(ConstStrings.excel_coding)
@@ -78,6 +79,9 @@ class PersonController(IControllerManager):
                     continue
 
                 is_reach = row.get(column_mapping[ConstStrings.is_reach_the_dinner_key], ConstStrings.empty_str).strip().upper() == ConstStrings.true_key
+                
+                contact_person = row.get(column_mapping[ConstStrings.contact_person_key], ConstStrings.empty_str).strip()
+
 
                 people.append({
                     ConstStrings.name_key: name,
@@ -85,6 +89,7 @@ class PersonController(IControllerManager):
                     ConstStrings.gender_key: gender,
                     ConstStrings.add_manual_key: False,
                     ConstStrings.is_reach_the_dinner_key: is_reach,
+                    ConstStrings.contact_person_key: contact_person,  
                     ConstStrings.is_active_key: True
                 })
 

@@ -27,6 +27,7 @@ class ConstStrings:
     female_key = "female"
     true_key = "TRUE"
     location_key = "location"
+    contact_person_key = "contact_person"
     
     # ? ENV keys
     localhost_env_key = "LOCAL_HOST"
@@ -47,5 +48,6 @@ class ConstStrings:
     reach_female_column = "מגיע נ"
     reach_all_column = "מגיעים תשפה"
     bimat_kavod = "בימת כבוד"
+    contact_person_column = "איש קשר"
     
     
